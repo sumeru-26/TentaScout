@@ -5,6 +5,7 @@
     import { setToStorage, getFromStorage, removeFromStorage } from '@/utils/localStorage';
 
     import NumEntry from '@/components/NumEntry.vue';
+    import TextEntry from '@/components/TextEntry.vue';
 
     import { Button } from '@/components/ui/button';
     
@@ -12,7 +13,7 @@
         'inputs': [
             {
                 'type': 'num',
-                'id': 'auto.test.speaker',
+                'id': 'speaker',
                 'label': 'Speaker',
             },
             {
@@ -20,6 +21,11 @@
                 'id': 'amp',
                 'label': 'Amp',
             },
+            {
+                'type': 'text',
+                'id': 'other.notes',
+                'label': 'Notes'
+            }
         ]
     }
 
@@ -64,6 +70,7 @@
 <template>
     <ul v-for="input in TEST_SCHEMA.inputs" :key="input">
         <NumEntry v-if="input.type === 'num'" :name="input.id" :label="input.label" />
+        <TextEntry v-if="input.type === 'text'" :name="input.id" :label="input.label" />
     </ul>
     <Button @click.stop.prevent="test=getEntryJson()">test</Button>
     <p>{{ test }}</p>
