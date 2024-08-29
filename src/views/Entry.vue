@@ -31,7 +31,7 @@
             if (input.id.includes('.')) {
                 var split = input.id.split('.')
                 var inter = {}
-                inter[split.at(-1)] = getFromStorage(input.id)
+                inter[split.at(-1)] = fixType(getFromStorage(input.id), input.type)
                 split.pop()
                 while (split.length > 1) {
                     let temp = {}
@@ -42,11 +42,20 @@
                 }
                 entry[split[0]] = inter
             } else {
-                entry[input.id] = getFromStorage(input.id)
+                entry[input.id] = fixType(getFromStorage(input.id), input.type)
             }
         }
         console.log(entry)
         return entry
+    }
+
+    function fixType(value, type) {
+        if (type === 'num') {
+            return parseInt(value)
+        } 
+        else {
+            return value
+        }
     }
 
 </script>
