@@ -2,12 +2,16 @@
 
     import { ref } from 'vue'
 
+    import { useRouter } from 'vue-router';
+
     import { setToStorage, getFromStorage, removeFromStorage } from '@/utils/localStorage';
 
     import NumEntry from '@/components/NumEntry.vue';
     import TextEntry from '@/components/TextEntry.vue';
 
     import { Button } from '@/components/ui/button';
+
+    const router = useRouter()
     
     const TEST_SCHEMA = {
         'inputs': [
@@ -64,14 +68,22 @@
         }
     }
 
+    function logout() {
+        localStorage.clear()
+        router.push({ path: '/login' })
+    }
+
 </script>
 
 
 <template>
+    <div class="mx-5 flex justify-end">
+        <Button variant="outline" @click.stop.prevent="logout()">Logout</Button>
+    </div>
     <ul v-for="input in TEST_SCHEMA.inputs" :key="input">
         <NumEntry v-if="input.type === 'num'" :name="input.id" :label="input.label" />
         <TextEntry v-if="input.type === 'text'" :name="input.id" :label="input.label" />
     </ul>
-    <Button @click.stop.prevent="test=getEntryJson()">test</Button>
-    <p>{{ test }}</p>
+    <!-- <Button @click.stop.prevent="test=getEntryJson()">test</Button>
+    <p>{{ test }}</p> -->
 </template>
